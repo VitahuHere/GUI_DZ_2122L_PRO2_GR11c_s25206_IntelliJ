@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 public abstract class Duck0 extends JButton implements ActionListener {
     public int lives;
     public int movementSpeed;
+    public JLabel label;
 
-    public Duck0(String iconPath) {
-        super("Duck0");
+    public Duck0(String iconPath, int lives, int movementSpeed) {
         this.setBorderPainted(false);
         this.setContentAreaFilled(false);
         this.setFocusPainted(false);
@@ -20,21 +20,26 @@ public abstract class Duck0 extends JButton implements ActionListener {
         this.setIcon(new ImageIcon(img));
         this.setSize(new Dimension(120, 100));
         this.addActionListener(this);
+        this.lives = lives;
+        this.movementSpeed = movementSpeed;
+        this.label = new JLabel(String.valueOf(lives));
+        this.add(label);
     }
 
-    public void move() {
+    protected void move() {
         this.setLocation(this.getX() + this.movementSpeed, this.getY());
     }
 
-    public boolean isAlive() {
+    protected boolean isAlive() {
         return lives > 0;
     }
 
     protected void hit() {
         this.lives--;
+        this.label.setText(String.valueOf(this.lives));
     }
 
-    public boolean reachedEnd() {
+    protected boolean reachedEnd() {
         if (this.movementSpeed > 0) {
             return this.getX() >= 1160;
         }
@@ -47,6 +52,7 @@ public abstract class Duck0 extends JButton implements ActionListener {
             this.move();
         } else {
             this.hit();
+            System.out.println("hit");
         }
     }
 }

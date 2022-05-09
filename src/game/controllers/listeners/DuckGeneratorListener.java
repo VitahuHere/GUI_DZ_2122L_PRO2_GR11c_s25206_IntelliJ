@@ -1,7 +1,6 @@
 package game.controllers.listeners;
 
 import game.buttons.ducks.*;
-import game.controllers.GameController;
 import game.panels.GamePanel;
 
 import java.awt.event.ActionEvent;
@@ -48,7 +47,7 @@ public class DuckGeneratorListener implements ActionListener {
         else {
             duck = new Right10Duck();
         }
-        duck.setLocation(0, (int)(Math.random() * (panel.getHeight() - duck.getHeight())));
+        duck.setLocation(0, (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight())));
         return duck;
     }
 
@@ -63,7 +62,7 @@ public class DuckGeneratorListener implements ActionListener {
         else {
             duck = new Left10Duck();
         }
-        duck.setLocation(panel.getWidth()-duck.getWidth(), (int)(Math.random() * (panel.getHeight() - duck.getHeight())));
+        duck.setLocation(panel.getWidth()-duck.getWidth(), (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight())));
         return duck;
     }
 }

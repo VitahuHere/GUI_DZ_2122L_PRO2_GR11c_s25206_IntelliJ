@@ -1,7 +1,7 @@
 package game.controllers;
 
 import game.buttons.ducks.Duck0;
-import game.controllers.listeners.GameListener;
+import game.controllers.listeners.DuckGeneratorListener;
 import game.frames.GameFrame;
 import game.panels.GamePanel;
 
@@ -40,7 +40,7 @@ public class GameController {
         Chances of ducks: 7/10, 2/10, 1/10
          */
         int MAX_DUCKS = 7;
-        GameListener listener = new GameListener(this.panel, this.ducks, MAX_DUCKS);
+        DuckGeneratorListener listener = new DuckGeneratorListener(this.panel, this.ducks, MAX_DUCKS);
         Timer timer = new Timer(1000, listener);
         timer.start();
     }
