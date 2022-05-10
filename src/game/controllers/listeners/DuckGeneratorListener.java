@@ -106,4 +106,11 @@ public class DuckGeneratorListener implements ActionListener {
         }
     }
 
+    public void setCurrent(int current) {
+         this.current = current;
+    }
+
+    public int getCurrent() {
+        return current;
+    }
 }

@@ -1,4 +1,4 @@
-package game.controllers;
+package game.controllers.threads;
 
 import game.frames.GameFrame;
 

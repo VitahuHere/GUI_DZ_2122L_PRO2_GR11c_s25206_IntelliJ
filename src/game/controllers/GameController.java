@@ -1,7 +1,9 @@
 package game.controllers;
 
 import game.buttons.ducks.Duck0;
+import game.controllers.listeners.DuckCheckerListener;
 import game.controllers.listeners.DuckGeneratorListener;
+import game.controllers.threads.DuckCheckerThread;
 import game.frames.GameFrame;
 import game.panels.GamePanel;
 
@@ -13,8 +15,10 @@ public class GameController {
     private final GamePanel panel;
     private final ArrayList<Duck0> ducks;
     private final PlayerModel player;
-    private Timer duckGenerator;
     private final int difficulty;
+    private int delay;
+    private Timer duckGenerator;
+    private Thread duckChecker;
 
     public GameController(int difficulty, GameFrame frame) {
         this.frame = frame;
@@ -22,6 +26,7 @@ public class GameController {
         this.panel = new GamePanel();
         this.ducks = new ArrayList<>();
         this.player = new PlayerModel();
+        this.delay = 1000;
         startGame();
     }
 
@@ -68,11 +73,21 @@ public class GameController {
             case 10 -> listener = new DuckGeneratorListener(panel, MAX_DUCKS, false, true);
             case 15 -> listener = new DuckGeneratorListener(panel, MAX_DUCKS, false, false);
         }
-        duckGenerator = new Timer(1000, listener);
+        duckGenerator = new Timer(this.delay, listener);
         duckGenerator.start();
+        duckChecker = new DuckCheckerThread(panel, listener);
+        duckChecker.start();
     }
 
     public void stopDuckGenerator(){
         duckGenerator.stop();
+    }
+
+    public void startDuckChecker(DuckCheckerListener listener) {
+
+    }
+
+    public void stopDuckChecker(){
+
     }
 }
