@@ -5,64 +5,105 @@ import game.panels.GamePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class DuckGeneratorListener implements ActionListener {
-    private GamePanel panel;
-    private ArrayList<Duck0> ducks;
-    private int max;
+    private final GamePanel panel;
+    private int current;
+    private final int max;
+    private final boolean easy;
+    private final boolean medium;
 
-    public DuckGeneratorListener(GamePanel panel, ArrayList<Duck0> ducks, int max) {
+    public DuckGeneratorListener(GamePanel panel, int max, boolean easy, boolean medium) {
         this.panel = panel;
-        this.ducks = ducks;
+        this.current = 0;
         this.max = max;
+        this.easy = easy;
+        this.medium = medium;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (ducks.size() < max) {
+        if (current < max) {
             Duck0 duck;
             int pick = (int) (Math.random() * 10);
             int side = (int) (Math.random() * 2);
-            if (side == 0){
-                duck = generateEasyRightDuck(pick);
-
-            } else{
-                duck = generateEasyLeftDuck(pick);
+            if(easy){
+                duck = generateEasyDuck(side == 0, pick);
             }
-
-            this.ducks.add(duck);
+            else if(medium){
+                duck = generateMediumDuck(side == 0, pick);
+            }
+            else{
+                duck = generateHardHardDuck(side == 0, pick);
+            }
+            if(side == 0){
+                duck.setLocation(0, (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight())));
+            }
+            else{
+                duck.setLocation(panel.getWidth()-duck.getWidth(), (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight())));
+            }
+            current++;
             panel.addNewDuck(duck);
         }
     }
 
-    private Duck0 generateEasyRightDuck(int odd){
+    private Duck0 generateEasyDuck(boolean right, int odd){
         Duck0 duck;
-        if(odd < 7){
-            duck = new Right1Duck();
+        if(right){
+            if(odd < 7){
+                duck = new Duck1(true);
+            }
+            else if (odd < 9){
+                duck = new Duck5(true);
+            }
+            else {
+                duck = new Duck10(true);
+            }
         }
-        else if (odd < 9){
-            duck = new Right5Duck();
+        else{
+            if(odd < 7){
+                duck = new Duck1();
+            }
+            else if (odd < 9){
+                duck = new Duck5();
+            }
+            else {
+                duck = new Duck10();
+            }
         }
-        else {
-            duck = new Right10Duck();
-        }
-        duck.setLocation(0, (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight())));
         return duck;
     }
 
-    private Duck0 generateEasyLeftDuck(int odd){
-        Duck0 duck;
-        if(odd < 7){
-            duck = new Left1Duck();
+    private Duck0 generateMediumDuck(boolean right, int odd){
+        Duck0 duck = null;
+        int x = twoOdds(right, odd);
+        switch (x){
+            case 0 -> duck = new Duck5(true);
+            case 1 -> duck = new Duck10(true);
+            case 2 -> duck = new Duck5();
+            case 3 -> duck = new Duck10();
         }
-        else if (odd < 9){
-            duck = new Left5Duck();
-        }
-        else {
-            duck = new Left10Duck();
-        }
-        duck.setLocation(panel.getWidth()-duck.getWidth(), (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight())));
         return duck;
     }
+
+    private Duck0 generateHardHardDuck(boolean right, int odd){
+        Duck0 duck = null;
+        switch (twoOdds(right, odd)){
+            case 0 -> duck = new Duck10(true);
+            case 1 -> duck = new Duck15(true);
+            case 2 -> duck = new Duck10();
+            case 3 -> duck = new Duck15();
+        }
+        return duck;
+    }
+
+    private int twoOdds(boolean right, int odd){
+        if(right){
+            return odd < 7 ? 0 : 1;
+        }
+        else{
+            return odd < 7 ? 3 : 4;
+        }
+    }
+
 }

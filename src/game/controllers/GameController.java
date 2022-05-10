@@ -13,7 +13,8 @@ public class GameController {
     private final GamePanel panel;
     private final ArrayList<Duck0> ducks;
     private final PlayerModel player;
-    int difficulty;
+    private Timer duckGenerator;
+    private final int difficulty;
 
     public GameController(int difficulty, GameFrame frame) {
         this.frame = frame;
@@ -39,10 +40,7 @@ public class GameController {
         Only ducks 1, 5, 10
         Chances of ducks: 7/10, 2/10, 1/10
          */
-        int MAX_DUCKS = 7;
-        DuckGeneratorListener listener = new DuckGeneratorListener(this.panel, this.ducks, MAX_DUCKS);
-        Timer timer = new Timer(1000, listener);
-        timer.start();
+        startDuckGenerator(7);
     }
 
     public void medium() {
@@ -51,6 +49,7 @@ public class GameController {
         Only ducks 5, 10
         Chances of ducks: 7/10, 3/10
          */
+        startDuckGenerator(10);
     }
 
     public void hard() {
@@ -59,5 +58,21 @@ public class GameController {
         Only ducks 10, 15
         Chances of ducks: 7/10, 3/10
          */
+        startDuckGenerator(15);
+    }
+
+    public void startDuckGenerator(int MAX_DUCKS) {
+        DuckGeneratorListener listener = null;
+        switch (MAX_DUCKS){
+            case 7 -> listener = new DuckGeneratorListener(panel, MAX_DUCKS, true, false);
+            case 10 -> listener = new DuckGeneratorListener(panel, MAX_DUCKS, false, true);
+            case 15 -> listener = new DuckGeneratorListener(panel, MAX_DUCKS, false, false);
+        }
+        duckGenerator = new Timer(1000, listener);
+        duckGenerator.start();
+    }
+
+    public void stopDuckGenerator(){
+        duckGenerator.stop();
     }
 }

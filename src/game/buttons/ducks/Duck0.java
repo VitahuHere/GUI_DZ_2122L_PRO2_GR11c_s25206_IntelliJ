@@ -8,42 +8,55 @@ import java.awt.event.ActionListener;
 public abstract class Duck0 extends JButton implements ActionListener {
     public int lives;
     public int movementSpeed;
-    public JLabel label;
+    public boolean right;
 
-    public Duck0(String iconPath, int lives, int movementSpeed) {
+    public Duck0(String leftIconPath, int lives, int movementSpeed) {
+        this.lives = lives;
+        this.movementSpeed = movementSpeed;
+        this.right = false;
+
         this.setBorderPainted(false);
         this.setContentAreaFilled(false);
         this.setFocusPainted(false);
-        this.setOpaque(false);
-        Image img = new ImageIcon(iconPath).getImage();
-        img = img.getScaledInstance(120, 100, Image.SCALE_SMOOTH);
-        this.setIcon(new ImageIcon(img));
+        this.setIcon(new ImageIcon(leftIconPath));
         this.setSize(new Dimension(120, 100));
+        this.setFocusable(false);
+
         this.addActionListener(this);
-        this.lives = lives;
-        this.movementSpeed = movementSpeed;
-        this.label = new JLabel(String.valueOf(lives));
-        this.add(label);
+
+        this.setText(String.valueOf(lives));
+        this.setFont(new Font("Arial", Font.BOLD, 20));
+        this.setVerticalTextPosition(SwingConstants.CENTER);
+        this.setHorizontalTextPosition(SwingConstants.CENTER);
     }
 
-    protected void move() {
+    public Duck0(String rightIconPath, boolean right, int lives, int movementSpeed) {
+        this(rightIconPath, lives, movementSpeed);
+        this.right = right;
+    }
+
+    public void move() {
         this.setLocation(this.getX() + this.movementSpeed, this.getY());
     }
 
-    protected boolean isAlive() {
+    public boolean isAlive() {
         return lives > 0;
     }
 
-    protected void hit() {
+    public void hit() {
         this.lives--;
-        this.label.setText(String.valueOf(this.lives));
+        this.setText(String.valueOf(lives));
     }
 
-    protected boolean reachedEnd() {
+    public boolean reachedEnd() {
         if (this.movementSpeed > 0) {
             return this.getX() >= 1160;
         }
         return this.getX() <= 120;
+    }
+
+    public void setVisibility(boolean visibility) {
+        this.setVisible(visibility);
     }
 
     @Override
@@ -52,7 +65,6 @@ public abstract class Duck0 extends JButton implements ActionListener {
             this.move();
         } else {
             this.hit();
-            System.out.println("hit");
         }
     }
 }

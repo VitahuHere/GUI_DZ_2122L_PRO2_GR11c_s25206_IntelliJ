@@ -10,6 +10,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         setLayout(null);
+        this.setFocusable(true);
     }
 
     public void addNewDuck(Duck0 duck) {
