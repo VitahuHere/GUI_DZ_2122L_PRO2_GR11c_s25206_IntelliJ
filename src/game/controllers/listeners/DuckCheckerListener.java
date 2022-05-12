@@ -23,9 +23,12 @@ public class DuckCheckerListener implements ActionListener {
                 if (!((Duck0) c).isAlive()){
                     panel.remove(c);
                     listener.setCurrent(listener.getCurrent() - 1);
-                    panel.revalidate();
-                    panel.repaint();
                 }
+                else{
+                    ((Duck0) c).move();
+                }
+                panel.revalidate();
+                panel.repaint();
             }
         }
     }

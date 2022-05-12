@@ -55,10 +55,6 @@ public abstract class Duck0 extends JButton implements ActionListener {
         return this.getX() <= 120;
     }
 
-    public void setVisibility(boolean visibility) {
-        this.setVisible(visibility);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand() == null) {

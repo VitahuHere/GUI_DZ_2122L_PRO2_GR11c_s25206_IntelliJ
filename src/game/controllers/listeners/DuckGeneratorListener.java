@@ -53,22 +53,16 @@ public class DuckGeneratorListener implements ActionListener {
             if(odd < 7){
                 duck = new Duck1(true);
             }
-            else if (odd < 9){
+            else{
                 duck = new Duck5(true);
-            }
-            else {
-                duck = new Duck10(true);
             }
         }
         else{
             if(odd < 7){
                 duck = new Duck1();
             }
-            else if (odd < 9){
+            else{
                 duck = new Duck5();
-            }
-            else {
-                duck = new Duck10();
             }
         }
         return duck;
