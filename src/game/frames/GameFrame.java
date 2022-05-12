@@ -5,8 +5,6 @@ import java.awt.event.KeyListener;
 
 public class GameFrame extends JFrame {
 
-    public static Thread thread = Thread.currentThread();
-
     public GameFrame() {
         super("Duck shooter");
         this.setIconImage(new ImageIcon("src/game/images/ducks/right 1 duck.png").getImage());

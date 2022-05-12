@@ -59,6 +59,6 @@ public record MenuController(GameFrame frame) {
     }
 
     public void exit() {
-        System.exit(0);
+        this.frame.dispose();
     }
 }

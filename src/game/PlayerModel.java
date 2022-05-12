@@ -1,4 +1,4 @@
-package game.controllers;
+package game;
 
 public class PlayerModel {
     private int lives;

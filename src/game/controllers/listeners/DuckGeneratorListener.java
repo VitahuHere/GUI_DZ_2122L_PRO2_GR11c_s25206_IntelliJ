@@ -48,30 +48,19 @@ public class DuckGeneratorListener implements ActionListener {
     }
 
     private Duck0 generateEasyDuck(boolean right, int odd){
-        Duck0 duck;
-        if(right){
-            if(odd < 7){
-                duck = new Duck1(true);
-            }
-            else{
-                duck = new Duck5(true);
-            }
-        }
-        else{
-            if(odd < 7){
-                duck = new Duck1();
-            }
-            else{
-                duck = new Duck5();
-            }
+        Duck0 duck = null;
+        switch (twoOdds(right, odd)){
+            case 0 -> duck = new Duck1(true);
+            case 1 -> duck = new Duck5(true);
+            case 2 -> duck = new Duck1();
+            case 3 -> duck = new Duck5();
         }
         return duck;
     }
 
     private Duck0 generateMediumDuck(boolean right, int odd){
-        Duck0 duck = null;
-        int x = twoOdds(right, odd);
-        switch (x){
+        Duck0 duck = null;;
+        switch (twoOdds(right, odd)){
             case 0 -> duck = new Duck5(true);
             case 1 -> duck = new Duck10(true);
             case 2 -> duck = new Duck5();
@@ -96,7 +85,7 @@ public class DuckGeneratorListener implements ActionListener {
             return odd < 7 ? 0 : 1;
         }
         else{
-            return odd < 7 ? 3 : 4;
+            return odd < 7 ? 2 : 3;
         }
     }
 

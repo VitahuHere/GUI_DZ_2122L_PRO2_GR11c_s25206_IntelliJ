@@ -1,17 +1,22 @@
 package game.buttons.ducks;
 
+import game.controllers.GameController;
+import game.panels.GamePanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public abstract class Duck0 extends JButton implements ActionListener {
-    public int lives;
-    public int movementSpeed;
-    public boolean right;
+    protected int lives;
+    protected int score;
+    protected int movementSpeed;
+    protected boolean right;
 
     public Duck0(String leftIconPath, int lives, int movementSpeed) {
         this.lives = lives;
+        this.score = lives;
         this.movementSpeed = movementSpeed;
         this.right = false;
 
@@ -50,9 +55,13 @@ public abstract class Duck0 extends JButton implements ActionListener {
 
     public boolean reachedEnd() {
         if (this.movementSpeed > 0) {
-            return this.getX() >= 1160;
+            return this.getX() >= this.getParent().getWidth();
         }
-        return this.getX() <= 120;
+        return this.getX() <= -this.getWidth();
+    }
+
+    public int getReward(){
+        return this.score;
     }
 
     @Override

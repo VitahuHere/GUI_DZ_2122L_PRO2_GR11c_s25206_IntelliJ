@@ -19,12 +19,6 @@ public class GamePanel extends JPanel {
         this.repaint();
     }
 
-    public void removeDuck(Duck0 duck) {
-        remove(duck);
-        this.revalidate();
-        this.repaint();
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
