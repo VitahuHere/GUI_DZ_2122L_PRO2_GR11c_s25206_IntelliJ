@@ -3,12 +3,15 @@ package game.controllers;
 import game.PlayerModel;
 import game.controllers.listeners.DuckCheckerListener;
 import game.controllers.listeners.DuckGeneratorListener;
+import game.controllers.threads.Stopwatch;
 import game.frames.GameFrame;
+import game.labels.LivesLabel;
+import game.labels.ScoreLabel;
+import game.labels.StopwatchLabel;
 import game.panels.GameOverPanel;
 import game.panels.GamePanel;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GameController {
     private static GameController instance;
@@ -16,9 +19,11 @@ public class GameController {
     private final GamePanel panel;
     private final PlayerModel player;
     private final int difficulty;
+    private Stopwatch stopwatch;
     private int MAX_DUCKS;
-    private JLabel scoreLabel;
-    private JLabel livesLabel;
+    private ScoreLabel scoreLabel;
+    private LivesLabel livesLabel;
+    private StopwatchLabel timeLabel;
     private Timer duckGeneratorTimer;
     private DuckGeneratorListener duckGeneratorListener;
     private Timer duckCheckerTimer;
@@ -39,13 +44,10 @@ public class GameController {
 
     public void startGame() {
         frame.setNewPanel(this.panel);
-        scoreLabel = new JLabel("Score: " + player.getScore());
-        scoreLabel.setSize(200, 100);
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        livesLabel = new JLabel("Lives: " + player.getLives());
-        livesLabel.setSize(200, 100);
-        livesLabel.setLocation(new Point(panel.getWidth()-200, 0));
-        livesLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        scoreLabel = new ScoreLabel("Score: " + player.getScore());
+        livesLabel = new LivesLabel(this.panel, "Lives: " + player.getLives());
+        timeLabel = new StopwatchLabel();
+
         panel.add(scoreLabel);
         panel.add(livesLabel);
         switch (difficulty) {
@@ -95,6 +97,7 @@ public class GameController {
         duckGeneratorTimer = new Timer(1000, duckGeneratorListener);
         duckGeneratorTimer.start();
         startDuckChecker();
+        stopwatch.start();
     }
 
     public void increaseDifficulty() {

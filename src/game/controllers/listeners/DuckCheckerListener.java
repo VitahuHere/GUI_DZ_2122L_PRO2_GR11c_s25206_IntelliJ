@@ -13,11 +13,13 @@ public class DuckCheckerListener implements ActionListener {
     GamePanel panel;
     DuckGeneratorListener listener;
     PlayerModel player;
+    int ticks;
 
     public DuckCheckerListener(GamePanel panel, DuckGeneratorListener listener, PlayerModel player) {
         this.panel = panel;
         this.listener = listener;
         this.player = player;
+
     }
 
     @Override
@@ -35,7 +37,6 @@ public class DuckCheckerListener implements ActionListener {
                     listener.setCurrent(listener.getCurrent() - 1);
                     player.strike();
                     GameController.getInstance().updateLivesLabel();
-                    System.out.println("Strike");
                     if(player.getLives() <= 0){
                         GameController.getInstance().stopGame();
                         GameController.getInstance().showEndGame();
