@@ -1,5 +1,6 @@
 package game.controllers.listeners;
 
+import game.controllers.GameController;
 import game.controllers.MenuController;
 import game.frames.GameFrame;
 
@@ -16,6 +17,9 @@ public record KeyCombListener(GameFrame frame) implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.isControlDown() && e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_Q) {
+            if(GameController.playing) {
+                GameController.getInstance().stopGame();
+            }
             new MenuController(frame).start();
         }
     }

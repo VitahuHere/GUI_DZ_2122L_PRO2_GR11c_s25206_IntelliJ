@@ -1,7 +1,6 @@
 package game.buttons.ducks;
 
-import game.controllers.GameController;
-import game.panels.GamePanel;
+import game.PlayerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,16 +39,16 @@ public abstract class Duck0 extends JButton implements ActionListener {
         this.right = right;
     }
 
-    public void move() {
-        this.setLocation(this.getX() + this.movementSpeed, this.getY());
+    public void move(int distance) {
+        this.setLocation(this.getX() + this.movementSpeed + distance, this.getY());
     }
 
     public boolean isAlive() {
         return lives > 0;
     }
 
-    public void hit() {
-        this.lives--;
+    public void hit(int hitValue) {
+        this.lives -= hitValue;
         this.setText(String.valueOf(lives));
     }
 
@@ -67,9 +66,9 @@ public abstract class Duck0 extends JButton implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand() == null) {
-            this.move();
+            this.move(0);
         } else {
-            this.hit();
+            this.hit(PlayerModel.getInstance().getHitOnClick());
         }
     }
 }

@@ -2,6 +2,7 @@ package game.controllers.listeners;
 
 import game.PlayerModel;
 import game.buttons.ducks.Duck0;
+import game.controllers.GameController;
 import game.panels.GamePanel;
 
 import java.awt.*;
@@ -26,15 +27,23 @@ public class DuckCheckerListener implements ActionListener {
                 if (!((Duck0) c).isAlive() && !((Duck0) c).reachedEnd()){
                     panel.remove(c);
                     listener.setCurrent(listener.getCurrent() - 1);
-                    player.setScore(player.getScore() + ((Duck0) c).getReward());
+                    player.addPoints(((Duck0) c).getReward());
+                    GameController.getInstance().updateScoreLabel();
                 }
                 else if(((Duck0) c).reachedEnd()){
                     panel.remove(c);
                     listener.setCurrent(listener.getCurrent() - 1);
                     player.strike();
+                    GameController.getInstance().updateLivesLabel();
+                    System.out.println("Strike");
+                    if(player.getLives() <= 0){
+                        GameController.getInstance().stopGame();
+                        GameController.getInstance().showEndGame();
+                        break;
+                    }
                 }
                 else{
-                    ((Duck0) c).move();
+                    ((Duck0) c).move(0);
                 }
                 panel.revalidate();
                 panel.repaint();

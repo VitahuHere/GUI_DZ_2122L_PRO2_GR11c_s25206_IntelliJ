@@ -4,16 +4,21 @@ import game.PlayerModel;
 import game.controllers.listeners.DuckCheckerListener;
 import game.controllers.listeners.DuckGeneratorListener;
 import game.frames.GameFrame;
+import game.panels.GameOverPanel;
 import game.panels.GamePanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GameController {
+    private static GameController instance;
     private final GameFrame frame;
     private final GamePanel panel;
     private final PlayerModel player;
     private final int difficulty;
     private int MAX_DUCKS;
+    private JLabel scoreLabel;
+    private JLabel livesLabel;
     private Timer duckGeneratorTimer;
     private DuckGeneratorListener duckGeneratorListener;
     private Timer duckCheckerTimer;
@@ -25,11 +30,24 @@ public class GameController {
         this.difficulty = difficulty;
         this.panel = new GamePanel();
         this.player = new PlayerModel();
-        startGame();
+        instance = this;
+    }
+
+    public static GameController getInstance() {
+        return instance;
     }
 
     public void startGame() {
         frame.setNewPanel(this.panel);
+        scoreLabel = new JLabel("Score: " + player.getScore());
+        scoreLabel.setSize(200, 100);
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        livesLabel = new JLabel("Lives: " + player.getLives());
+        livesLabel.setSize(200, 100);
+        livesLabel.setLocation(new Point(panel.getWidth()-200, 0));
+        livesLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        panel.add(scoreLabel);
+        panel.add(livesLabel);
         switch (difficulty) {
             case 0 -> easy();
             case 1 -> medium();
@@ -69,21 +87,21 @@ public class GameController {
 
     public void startDuckGenerator(String difficulty) {
         playing = true;
-        switch (difficulty){
+        switch (difficulty) {
             case "easy" -> duckGeneratorListener = new DuckGeneratorListener(panel, MAX_DUCKS, true, false);
             case "medium" -> duckGeneratorListener = new DuckGeneratorListener(panel, MAX_DUCKS, false, true);
             case "hard" -> duckGeneratorListener = new DuckGeneratorListener(panel, MAX_DUCKS, false, false);
         }
-        startDuckChecker();
         duckGeneratorTimer = new Timer(1000, duckGeneratorListener);
         duckGeneratorTimer.start();
+        startDuckChecker();
     }
 
-    public void setDelay(int delay) {
-        duckGeneratorTimer.setDelay(delay);
+    public void increaseDifficulty() {
+        duckGeneratorTimer.setDelay(duckGeneratorTimer.getDelay() - 50);
     }
 
-    public void stopDuckGenerator(){
+    public void stopDuckGenerator() {
         duckGeneratorTimer.stop();
     }
 
@@ -96,7 +114,25 @@ public class GameController {
         duckCheckerThread.start();
     }
 
-    public void stopDuckChecker(){
+    public void stopDuckChecker() {
         duckCheckerTimer.stop();
+    }
+
+    public void stopGame() {
+        stopDuckGenerator();
+        stopDuckChecker();
+        playing = false;
+    }
+
+    public void updateScoreLabel(){
+        scoreLabel.setText("Score: " + player.getScore());
+    }
+
+    public void updateLivesLabel(){
+        livesLabel.setText("Lives: " + player.getLives());
+    }
+
+    public void showEndGame() {
+        frame.setNewPanel(new GameOverPanel());
     }
 }

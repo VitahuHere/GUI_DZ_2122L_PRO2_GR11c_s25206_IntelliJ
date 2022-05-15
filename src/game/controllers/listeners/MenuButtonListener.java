@@ -14,9 +14,9 @@ public record MenuButtonListener(MenuController controller) implements ActionLis
             case "New Game" -> this.controller.newGame();
             case "High Scores" -> this.controller.highScores();
             case "Exit" -> this.controller.exit();
-            case "Easy" -> new GameController(0, controller.frame());
-            case "Medium" -> new GameController(1, controller.frame());
-            case "Hard" -> new GameController(2, controller.frame());
+            case "Easy" -> new GameController(0, controller.frame()).startGame();
+            case "Medium" -> new GameController(1, controller.frame()).startGame();
+            case "Hard" -> new GameController(2, controller.frame()).startGame();
         }
     }
 
