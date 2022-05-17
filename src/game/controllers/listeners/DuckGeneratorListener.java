@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class DuckGeneratorListener implements ActionListener {
     private final GamePanel panel;
     private int current;
-    private final int max;
+    private int max;
     private final boolean easy;
     private final boolean medium;
 
@@ -95,5 +95,13 @@ public class DuckGeneratorListener implements ActionListener {
 
     public int getCurrent() {
         return current;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getMax() {
+        return max;
     }
 }

@@ -14,11 +14,10 @@ public class Stopwatch extends Thread {
                 e.printStackTrace();
             }
             ticks++;
-            System.out.println(ticks);
         }
     }
 
-    public int getSeconds() {
-        return this.ticks;
+    public int getTicks() {
+        return ticks;
     }
 }

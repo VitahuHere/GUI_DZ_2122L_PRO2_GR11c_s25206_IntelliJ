@@ -3,11 +3,7 @@ package game.controllers;
 import game.PlayerModel;
 import game.controllers.listeners.DuckCheckerListener;
 import game.controllers.listeners.DuckGeneratorListener;
-import game.controllers.threads.Stopwatch;
 import game.frames.GameFrame;
-import game.labels.LivesLabel;
-import game.labels.ScoreLabel;
-import game.labels.StopwatchLabel;
 import game.panels.GameOverPanel;
 import game.panels.GamePanel;
 
@@ -15,15 +11,13 @@ import javax.swing.*;
 
 public class GameController {
     private static GameController instance;
+    private InterfaceController interfaceController;
+    private PlayerObstacleController playerObstacleController;
     private final GameFrame frame;
     private final GamePanel panel;
     private final PlayerModel player;
     private final int difficulty;
-    private Stopwatch stopwatch;
     private int MAX_DUCKS;
-    private ScoreLabel scoreLabel;
-    private LivesLabel livesLabel;
-    private StopwatchLabel timeLabel;
     private Timer duckGeneratorTimer;
     private DuckGeneratorListener duckGeneratorListener;
     private Timer duckCheckerTimer;
@@ -31,11 +25,11 @@ public class GameController {
     public static boolean playing = false;
 
     public GameController(int difficulty, GameFrame frame) {
+        instance = this;
         this.frame = frame;
         this.difficulty = difficulty;
         this.panel = new GamePanel();
         this.player = new PlayerModel();
-        instance = this;
     }
 
     public static GameController getInstance() {
@@ -44,12 +38,7 @@ public class GameController {
 
     public void startGame() {
         frame.setNewPanel(this.panel);
-        scoreLabel = new ScoreLabel("Score: " + player.getScore());
-        livesLabel = new LivesLabel(this.panel, "Lives: " + player.getLives());
-        timeLabel = new StopwatchLabel();
-
-        panel.add(scoreLabel);
-        panel.add(livesLabel);
+        interfaceController = new InterfaceController();
         switch (difficulty) {
             case 0 -> easy();
             case 1 -> medium();
@@ -97,11 +86,12 @@ public class GameController {
         duckGeneratorTimer = new Timer(1000, duckGeneratorListener);
         duckGeneratorTimer.start();
         startDuckChecker();
-        stopwatch.start();
+        interfaceController.run();
     }
 
     public void increaseDifficulty() {
         duckGeneratorTimer.setDelay(duckGeneratorTimer.getDelay() - 50);
+        duckGeneratorListener.setMax(duckGeneratorListener.getMax() + 1);
     }
 
     public void stopDuckGenerator() {
@@ -124,18 +114,17 @@ public class GameController {
     public void stopGame() {
         stopDuckGenerator();
         stopDuckChecker();
+        interfaceController.stop();
         playing = false;
+        GameOverPanel gameOverPanel = new GameOverPanel();
+        frame.setNewPanel(gameOverPanel);
     }
 
-    public void updateScoreLabel(){
-        scoreLabel.setText("Score: " + player.getScore());
+    public GamePanel getPanel() {
+        return panel;
     }
 
-    public void updateLivesLabel(){
-        livesLabel.setText("Lives: " + player.getLives());
-    }
-
-    public void showEndGame() {
-        frame.setNewPanel(new GameOverPanel());
+    public PlayerModel getPlayer() {
+        return player;
     }
 }
