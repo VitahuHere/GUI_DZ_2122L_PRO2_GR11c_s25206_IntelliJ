@@ -1,6 +1,6 @@
 package game.controllers.listeners;
 
-import game.PlayerModel;
+import game.players.PlayerModel;
 import game.buttons.ducks.Duck0;
 import game.controllers.GameController;
 import game.panels.GamePanel;
@@ -37,9 +37,6 @@ public class DuckCheckerListener implements ActionListener {
                         GameController.getInstance().stopGame();
                         break;
                     }
-                }
-                else{
-                    ((Duck0) c).move(0);
                 }
                 panel.revalidate();
                 panel.repaint();

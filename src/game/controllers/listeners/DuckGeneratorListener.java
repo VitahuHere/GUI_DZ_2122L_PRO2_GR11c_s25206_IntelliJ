@@ -3,6 +3,7 @@ package game.controllers.listeners;
 import game.buttons.ducks.*;
 import game.panels.GamePanel;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

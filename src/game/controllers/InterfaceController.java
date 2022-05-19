@@ -34,6 +34,7 @@ public class InterfaceController {
             });
             interTimer.start();
         });
+        thread.setDaemon(true);
         thread.start();
     }
 

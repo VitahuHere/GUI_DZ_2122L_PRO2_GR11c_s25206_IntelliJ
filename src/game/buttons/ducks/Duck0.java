@@ -1,6 +1,6 @@
 package game.buttons.ducks;
 
-import game.PlayerModel;
+import game.players.PlayerModel;
 
 import javax.swing.*;
 import java.awt.*;

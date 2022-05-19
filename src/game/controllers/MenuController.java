@@ -4,8 +4,8 @@ import game.buttons.menuButtons.*;
 import game.controllers.listeners.KeyCombListener;
 import game.controllers.listeners.MenuButtonListener;
 import game.frames.GameFrame;
+import game.panels.HighScoresPanel;
 import game.panels.MenuPanel;
-
 public record MenuController(GameFrame frame) {
 
     public MenuController(GameFrame frame) {
@@ -55,7 +55,8 @@ public record MenuController(GameFrame frame) {
     }
 
     public void highScores() {
-
+        HighScoresPanel panel = new HighScoresPanel();
+        this.frame.setNewPanel(panel);
     }
 
     public void exit() {
