@@ -10,7 +10,7 @@ public class Tree extends JPanel {
         this.setFocusable(false);
         this.setSize(width, height);
         this.setLocation((int)(Math.random() * (GameController.getInstance().getPanel().getWidth() - width)),
-                (int)(Math.random() * (GameController.getInstance().getPanel().getHeight() - height)));
+                (int)(Math.random() * (GameController.getInstance().getPanel().getHeight() - height - 240) + 240));
         JButton button = new JButton(new ImageIcon(treePath));
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);

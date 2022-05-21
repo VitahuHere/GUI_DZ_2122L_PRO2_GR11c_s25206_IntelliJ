@@ -22,6 +22,6 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(this.background.getImage(), 0, 0, null);
+        g.drawImage(this.background.getImage(), 0, 50, null);
     }
 }

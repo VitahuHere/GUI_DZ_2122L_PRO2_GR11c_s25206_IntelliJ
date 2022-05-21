@@ -10,14 +10,18 @@ public record MenuButtonListener(MenuController controller) implements ActionLis
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        int difficulty = -1;
         switch (e.getActionCommand()) {
             case "New Game" -> this.controller.newGame();
             case "High Scores" -> this.controller.highScores();
             case "Exit" -> this.controller.exit();
-            case "Easy" -> new GameController(0, controller.frame()).startGame();
-            case "Medium" -> new GameController(1, controller.frame()).startGame();
-            case "Hard" -> new GameController(2, controller.frame()).startGame();
+            case "Easy" -> difficulty = 0;
+            case "Medium" -> difficulty = 1;
+            case "Hard" -> difficulty = 2;
+        }
+        if(difficulty != -1) {
+            controller.getFrame().dispose();
+            new GameController(difficulty).startGame();
         }
     }
-
 }

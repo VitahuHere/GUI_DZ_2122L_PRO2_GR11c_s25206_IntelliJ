@@ -1,7 +1,5 @@
 package game.labels;
 
-import game.controllers.GameController;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,9 +7,9 @@ public class StopwatchLabel extends JLabel {
 
     public StopwatchLabel() {
         this.setText("00:00:00");
-        this.setSize(200, 100);
         this.setFont(new Font("Arial", Font.BOLD, 25));
-        this.setLocation(GameController.getInstance().getPanel().getWidth()/2 - 100, 0);
+        this.setSize(this.getPreferredSize());
+        this.setForeground(Color.WHITE);
     }
 
     public void setTime(int seconds){

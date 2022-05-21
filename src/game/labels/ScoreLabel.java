@@ -5,9 +5,10 @@ import java.awt.*;
 
 public class ScoreLabel extends JLabel {
 
-    public ScoreLabel(String text) {
-        this.setText(text);
-        this.setSize(200, 100);
+    public ScoreLabel() {
+        this.setText("Score: 0");
         this.setFont(new Font("Arial", Font.BOLD, 25));
+        this.setForeground(Color.WHITE);
+        this.setSize(this.getPreferredSize());
     }
 }

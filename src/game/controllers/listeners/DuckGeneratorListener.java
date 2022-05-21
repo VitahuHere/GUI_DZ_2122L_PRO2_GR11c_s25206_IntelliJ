@@ -38,10 +38,10 @@ public class DuckGeneratorListener implements ActionListener {
                 duck = generateHardHardDuck(side == 0, pick);
             }
             if(side == 0){
-                duck.setLocation(0, (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight())));
+                duck.setLocation(0, (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight()) + 50));
             }
             else{
-                duck.setLocation(panel.getWidth()-duck.getWidth(), (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight())));
+                duck.setLocation(panel.getWidth()-duck.getWidth(), (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight()) + 50));
             }
             current++;
             panel.addNewDuck(duck);

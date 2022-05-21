@@ -1,5 +1,6 @@
 package game.controllers;
 
+import game.controllers.listeners.KeyCombListener;
 import game.players.PlayerModel;
 import game.controllers.listeners.DuckCheckerListener;
 import game.controllers.listeners.DuckGeneratorListener;
@@ -25,11 +26,12 @@ public class GameController {
     private DuckCheckerListener duckCheckerListener;
     private Timer duckMovingTimer;
     private DuckMovingListener duckMovingListener;
+    private Timer difficultyTimer;
     public static boolean playing = false;
 
-    public GameController(int difficulty, GameFrame frame) {
+    public GameController(int difficulty) {
         instance = this;
-        this.frame = frame;
+        frame = new GameFrame();
         this.difficulty = difficulty;
         this.panel = new GamePanel();
         this.player = new PlayerModel();
@@ -41,6 +43,8 @@ public class GameController {
 
     public void startGame() {
         frame.setNewPanel(this.panel);
+        frame.setVisible(true);
+        frame.setKeyListener(new KeyCombListener(frame));
         interfaceController = new InterfaceController();
         playerObstacleController = new PlayerObstacleController(player);
         switch (difficulty) {
@@ -52,7 +56,7 @@ public class GameController {
 
     public void easy() {
         /*
-        Max count of ducks: 5
+        Start max count of ducks: 5
         Only ducks 1, 5
         Chances of ducks: 7/10, 3/10
          */
@@ -63,7 +67,7 @@ public class GameController {
 
     public void medium() {
         /*
-        Max count of ducks: 7
+        Start max count of ducks: 7
         Only ducks 5, 10
         Chances of ducks: 7/10, 3/10
          */
@@ -74,7 +78,7 @@ public class GameController {
 
     public void hard() {
         /*
-        Max count of ducks: 10
+        Start max count of ducks: 10
         Only ducks 10, 15
         Chances of ducks: 7/10, 3/10
          */
@@ -87,17 +91,33 @@ public class GameController {
         playing = true;
         interfaceController.run();
         playerObstacleController.run();
+        increaseDifficulty();
         startDuckGenerator();
         startDuckChecker();
         startMovingDucks();
     }
 
     public void increaseDifficulty() {
-        duckGeneratorTimer.setDelay(duckGeneratorTimer.getDelay() - 50);
-        duckGeneratorListener.setMax(duckGeneratorListener.getMax() + 1);
-        if(duckMovingTimer.getDelay() > 0){
-            duckMovingTimer.setDelay(duckMovingTimer.getDelay() - 1);
-        }
+        difficultyTimer = new Timer(5000, e -> {
+            duckGeneratorListener.setMax(duckGeneratorListener.getMax() + 1);
+            if(duckGeneratorTimer.getDelay() > 0){
+                duckGeneratorTimer.setDelay(duckGeneratorTimer.getDelay() - 50);
+            }
+            if(duckMovingTimer.getDelay() > 0){
+                duckMovingTimer.setDelay(duckMovingTimer.getDelay() - 1);
+            }
+            if(playerObstacleController.getCloudTimerDelay() > 0){
+                playerObstacleController.setCloudTimerDelay(playerObstacleController.getCloudTimerDelay() - 100);
+            }
+            if(interfaceController.getTick() % 60 == 0){
+                playerObstacleController.generateTrees();
+            }
+        });
+        difficultyTimer.start();
+    }
+
+    public void stopDifficulty() {
+        difficultyTimer.stop();
     }
 
     public void startDuckGenerator(){
@@ -105,7 +125,6 @@ public class GameController {
             duckGeneratorTimer = new Timer(1000, duckGeneratorListener);
             duckGeneratorTimer.start();
         });
-        duckGeneratorThread.setDaemon(true);
         duckGeneratorThread.start();
     }
 
@@ -145,6 +164,7 @@ public class GameController {
         stopDuckGenerator();
         stopDuckChecker();
         stopMovingDucks();
+        stopDifficulty();
         interfaceController.stop();
         playerObstacleController.stop();
         playing = false;

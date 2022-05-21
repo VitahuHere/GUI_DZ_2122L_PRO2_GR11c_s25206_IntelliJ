@@ -1,16 +1,14 @@
 package game.labels;
 
-import game.controllers.GameController;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class LivesLabel extends JLabel {
 
-    public LivesLabel(String text) {
-        this.setText(text);
-        this.setSize(200, 100);
-        this.setLocation(new Point(GameController.getInstance().getPanel().getWidth()-200, 0));
+    public LivesLabel() {
+        this.setText("Lives: 10");
         this.setFont(new Font("Arial", Font.BOLD, 25));
+        this.setForeground(Color.WHITE);
+        this.setSize(this.getPreferredSize().width, 50);
     }
 }

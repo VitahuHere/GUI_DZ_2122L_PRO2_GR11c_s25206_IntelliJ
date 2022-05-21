@@ -16,10 +16,6 @@ public class PlayerObstacleController {
         this.player = player;
     }
 
-    public PlayerObstacleController getInstance() {
-        return this;
-    }
-
     public void run(){
         generateTrees();
         generateClouds();
@@ -27,23 +23,23 @@ public class PlayerObstacleController {
     }
 
     public void generateTrees() {
-        Tree tree = new Tree("src/game/images/obstacles/tree.png", 360, 618);
+        Tree tree = new Tree("src/game/images/obstacles/tree2.png", 360, 366);
         Tree tree2 = new Tree("src/game/images/obstacles/tree2.png", 360, 366);
         GameController.getInstance().getPanel().add(tree);
         GameController.getInstance().getPanel().add(tree2);
     }
 
     public void generateClouds(){
-        cloudTimer = new Timer(5000, e -> {
-            Cloud cloud = new Cloud("src/game/images/obstacles/cloud.png", 300, 150, (int)(Math.random() * 2));
+        cloudTimer = new Timer(15000, e -> {
             int side = (int)(Math.random() * 2);
-            if (side > 0){
-                cloud.setLocation(-cloud.getWidth(), (int)(Math.random() * 50));
+            Cloud cloud = new Cloud("src/game/images/obstacles/cloud.png", 300, 150, side);
+            if (side == 0){
+                cloud.setLocation(-cloud.getWidth(), (int)(Math.random() * 100 + 50));
             } else {
-                cloud.setLocation(GameController.getInstance().getPanel().getWidth() - cloud.getWidth(),
-                        (int)(Math.random() * (GameController.getInstance().getPanel().getHeight() - cloud.getHeight())));
+                cloud.setLocation(GameController.getInstance().getPanel().getWidth(),
+                        (int)(Math.random() * 50));
             }
-            GameController.getInstance().getPanel().add(cloud);
+            GameController.getInstance().getPanel().add(cloud,1);
         });
         cloudTimer.start();
     }
@@ -62,12 +58,12 @@ public class PlayerObstacleController {
                 for (Component c : GameController.getInstance().getPanel().getComponents()) {
                     if (c instanceof Cloud cloud) {
                         if(cloud.getSide() == 0){
-                            cloud.setLocation(cloud.getX() + 1, cloud.getY());
+                            cloud.setLocation(cloud.getX() + 4, cloud.getY());
                             if(cloud.getX() > GameController.getInstance().getPanel().getWidth()){
                                 GameController.getInstance().getPanel().remove(cloud);
                             }
                         } else {
-                            cloud.setLocation(cloud.getX() - 1, cloud.getY());
+                            cloud.setLocation(cloud.getX() - 4, cloud.getY());
                             if(cloud.getX() < -cloud.getWidth()){
                                 GameController.getInstance().getPanel().remove(cloud);
                             }

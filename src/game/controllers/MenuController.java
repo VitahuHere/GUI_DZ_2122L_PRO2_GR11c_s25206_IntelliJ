@@ -4,13 +4,20 @@ import game.buttons.menuButtons.*;
 import game.controllers.listeners.KeyCombListener;
 import game.controllers.listeners.MenuButtonListener;
 import game.frames.GameFrame;
+import game.frames.MenuFrame;
 import game.panels.HighScoresPanel;
 import game.panels.MenuPanel;
-public record MenuController(GameFrame frame) {
 
-    public MenuController(GameFrame frame) {
+public class MenuController {
+    private final MenuFrame frame;
+
+    public MenuController(MenuFrame frame) {
         this.frame = frame;
-        this.frame.setKeyListener(new KeyCombListener(this.frame));
+        this.frame.setVisible(true);
+    }
+
+    public MenuController(GameFrame frame){
+        this.frame = new MenuFrame();
         this.frame.setVisible(true);
     }
 
@@ -61,5 +68,9 @@ public record MenuController(GameFrame frame) {
 
     public void exit() {
         this.frame.dispose();
+    }
+
+    public MenuFrame getFrame(){
+        return this.frame;
     }
 }

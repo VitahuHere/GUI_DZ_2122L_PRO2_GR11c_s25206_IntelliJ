@@ -20,6 +20,7 @@ public record KeyCombListener(GameFrame frame) implements KeyListener {
             if(GameController.playing) {
                 GameController.getInstance().stopGame();
             }
+            frame.dispose();
             new MenuController(frame).start();
         }
     }
