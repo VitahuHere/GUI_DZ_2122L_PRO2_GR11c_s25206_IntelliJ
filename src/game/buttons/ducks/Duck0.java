@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 
 public abstract class Duck0 extends JButton implements ActionListener {
     protected int lives;
-    protected int score;
-    protected int movementSpeed;
+    protected final int score;
+    protected final int movementSpeed;
     protected boolean right;
 
     public Duck0(String leftIconPath, int lives, int movementSpeed) {

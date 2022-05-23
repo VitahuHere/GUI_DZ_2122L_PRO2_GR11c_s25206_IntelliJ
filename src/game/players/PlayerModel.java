@@ -53,10 +53,6 @@ public class PlayerModel implements Serializable, Comparable<PlayerModel> {
         upgradeCost *= 2;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }

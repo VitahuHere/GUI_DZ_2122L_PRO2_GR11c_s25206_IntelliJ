@@ -2,7 +2,6 @@ package game.controllers;
 
 import game.buttons.menuButtons.*;
 import game.controllers.listeners.MenuButtonListener;
-import game.frames.GameFrame;
 import game.frames.MenuFrame;
 import game.panels.MenuPanel;
 
@@ -19,7 +18,7 @@ public class MenuController {
         }
     }
 
-    public MenuController(GameFrame ignore) {
+    public MenuController() {
         this(new MenuFrame());
     }
 

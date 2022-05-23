@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 public abstract class MenuButton extends JButton implements ChangeListener {
 
-    protected String notPressedPath;
-    protected String pressedPath;
+    protected final String notPressedPath;
+    protected final String pressedPath;
 
     protected MenuButton(String notPressedPath, String pressedPath) {
         this.setIcon(iconGet(notPressedPath));

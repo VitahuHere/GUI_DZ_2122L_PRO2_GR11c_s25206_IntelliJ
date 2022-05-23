@@ -3,7 +3,7 @@ package game.panels.obstacles;
 import javax.swing.*;
 
 public class Cloud extends JPanel {
-    int side;
+    final int side;
 
     public Cloud(String path, int width, int height, int side) {
         this.side = side;

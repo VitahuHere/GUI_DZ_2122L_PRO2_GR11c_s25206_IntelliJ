@@ -10,9 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DuckCheckerListener implements ActionListener {
-    GamePanel panel;
-    DuckGeneratorListener listener;
-    PlayerModel player;
+    final GamePanel panel;
+    final DuckGeneratorListener listener;
+    final PlayerModel player;
 
     public DuckCheckerListener(GamePanel panel, DuckGeneratorListener listener, PlayerModel player) {
         this.panel = panel;

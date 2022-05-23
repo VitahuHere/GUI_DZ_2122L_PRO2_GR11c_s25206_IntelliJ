@@ -10,13 +10,6 @@ public class ObstacleController {
     private Timer cloudTimer;
     private Timer moveCloudsTimer;
 
-    public ObstacleController() {
-    }
-
-    public ObstacleController getInstance() {
-        return this;
-    }
-
     public void run() {
         generateTrees();
         generateClouds();

@@ -20,8 +20,4 @@ public class MenuFrame extends JFrame {
         this.revalidate();
         this.repaint();
     }
-
-    public void setKeyListener(KeyListener keyListener) {
-        this.addKeyListener(keyListener);
-    }
 }
