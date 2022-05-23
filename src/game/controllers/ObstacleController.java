@@ -1,19 +1,20 @@
 package game.controllers;
 
 import game.panels.obstacles.Cloud;
-import game.players.PlayerModel;
 import game.panels.obstacles.Tree;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PlayerObstacleController {
-    private PlayerModel player;
+public class ObstacleController {
     private Timer cloudTimer;
     private Timer moveCloudsTimer;
 
-    public PlayerObstacleController(PlayerModel player) {
-        this.player = player;
+    public ObstacleController() {
+    }
+
+    public ObstacleController getInstance(){
+        return this;
     }
 
     public void run(){

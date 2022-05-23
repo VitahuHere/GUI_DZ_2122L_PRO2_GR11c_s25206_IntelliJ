@@ -1,15 +1,19 @@
 package game.players;
 
-public class PlayerModel {
+import java.io.Serializable;
+
+public class PlayerModel implements Serializable {
     private static PlayerModel instance;
     private int lives;
     private int score;
+    private int upgradeCost;
     private int hitOnClick;
     private String name;
 
     public PlayerModel() {
         this.lives = 10;
         this.score = 0;
+        this.upgradeCost = 2;
         this.hitOnClick = 1;
         instance = this;
     }
@@ -40,6 +44,8 @@ public class PlayerModel {
 
     public void upgradeHitOnClick() {
         hitOnClick++;
+        this.score -= upgradeCost;
+        upgradeCost *= 2;
     }
 
     public void setName(String name){
@@ -48,6 +54,10 @@ public class PlayerModel {
 
     public String getName(){
         return name;
+    }
+
+    public int getUpgradeCost(){
+        return this.upgradeCost;
     }
 
     @Override

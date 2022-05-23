@@ -1,10 +1,12 @@
 package game.controllers;
 
-import game.buttons.WeaponUpgradeButton;
+import game.buttons.gameButtons.WeaponUpgradeButton;
+import game.controllers.listeners.PlayerUpgradeListener;
 import game.controllers.threads.Stopwatch;
 import game.labels.LivesLabel;
 import game.labels.ScoreLabel;
 import game.labels.StopwatchLabel;
+import game.players.PlayerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,18 +16,25 @@ public class InterfaceController {
     private final ScoreLabel scoreLabel;
     private final StopwatchLabel stopwatchLabel;
     private final JLabel upgradeLabel;
-    private final JButton upgradeButton;
+    private final JLabel upgradeCostLabel;
+    private final WeaponUpgradeButton upgradeButton;
     private final Stopwatch stopwatch;
     private final JPanel panel;
     private Timer interTimer;
 
     public InterfaceController() {
         panel = new JPanel();
+        panel.setFocusable(false);
         this.stopwatch = new Stopwatch();
         this.livesLabel = new LivesLabel();
         this.scoreLabel = new ScoreLabel();
         this.upgradeLabel = new JLabel("Upgrade: ");
+        this.upgradeCostLabel = new JLabel();
+        this.upgradeLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        this.upgradeLabel.setForeground(Color.WHITE);
         this.upgradeButton = new WeaponUpgradeButton();
+        this.upgradeButton.addActionListener(new PlayerUpgradeListener());
+        this.upgradeButton.add(upgradeCostLabel);
         this.stopwatchLabel = new StopwatchLabel();
     }
 
@@ -34,6 +43,13 @@ public class InterfaceController {
         this.stopwatch.start();
         Thread thread = new Thread(() -> {
             interTimer = new Timer(0, e -> {
+                if(PlayerModel.getInstance().getScore() >= PlayerModel.getInstance().getUpgradeCost()){
+                    upgradeButton.enableImage();
+                }
+                else {
+                    upgradeButton.disableImage();
+                }
+                upgradeCostLabel.setText("cost: " + PlayerModel.getInstance().getUpgradeCost());
                 livesLabel.setText("Lives: " + GameController.getInstance().getPlayer().getLives());
                 scoreLabel.setText("Score: " + GameController.getInstance().getPlayer().getScore());
                 stopwatchLabel.setTime(stopwatch.getTicks());
@@ -55,10 +71,15 @@ public class InterfaceController {
         layout.putConstraint(SpringLayout.WEST, livesLabel, 0, SpringLayout.WEST, panel);
         layout.putConstraint(SpringLayout.VERTICAL_CENTER, scoreLabel, 0, SpringLayout.VERTICAL_CENTER, panel);
         layout.putConstraint(SpringLayout.EAST, scoreLabel, -50, SpringLayout.EAST, panel);
+        layout.putConstraint(SpringLayout.VERTICAL_CENTER, upgradeLabel, 0, SpringLayout.VERTICAL_CENTER, panel);
+        layout.putConstraint(SpringLayout.WEST, upgradeLabel, 50, SpringLayout.EAST, livesLabel);
+        layout.putConstraint(SpringLayout.VERTICAL_CENTER, upgradeButton, 0, SpringLayout.VERTICAL_CENTER, panel);
+        layout.putConstraint(SpringLayout.WEST, upgradeButton, 0, SpringLayout.EAST, upgradeLabel);
         panel.add(this.livesLabel);
         panel.add(this.stopwatchLabel);
         panel.add(this.scoreLabel);
-
+        panel.add(this.upgradeLabel);
+        panel.add(this.upgradeButton);
         GameController.getInstance().getPanel().add(panel, BorderLayout.NORTH);
     }
 

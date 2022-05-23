@@ -9,6 +9,8 @@ public class PlayerUpgradeListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        PlayerModel.getInstance().upgradeHitOnClick();
+        if(PlayerModel.getInstance().getScore() >= PlayerModel.getInstance().getUpgradeCost()){
+            PlayerModel.getInstance().upgradeHitOnClick();
+        }
     }
 }

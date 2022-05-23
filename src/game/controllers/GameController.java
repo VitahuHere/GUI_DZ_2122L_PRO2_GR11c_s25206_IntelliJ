@@ -1,6 +1,7 @@
 package game.controllers;
 
 import game.controllers.listeners.KeyCombListener;
+import game.frames.MenuFrame;
 import game.players.PlayerModel;
 import game.controllers.listeners.DuckCheckerListener;
 import game.controllers.listeners.DuckGeneratorListener;
@@ -14,7 +15,7 @@ import javax.swing.*;
 public class GameController {
     private static GameController instance;
     private InterfaceController interfaceController;
-    private PlayerObstacleController playerObstacleController;
+    private ObstacleController obstacleController;
     private final GameFrame frame;
     private final GamePanel panel;
     private final PlayerModel player;
@@ -46,7 +47,7 @@ public class GameController {
         frame.setVisible(true);
         frame.setKeyListener(new KeyCombListener(frame));
         interfaceController = new InterfaceController();
-        playerObstacleController = new PlayerObstacleController(player);
+        obstacleController = new ObstacleController();
         switch (difficulty) {
             case 0 -> easy();
             case 1 -> medium();
@@ -90,7 +91,7 @@ public class GameController {
     private void startProcesses() {
         playing = true;
         interfaceController.run();
-        playerObstacleController.run();
+        obstacleController.run();
         increaseDifficulty();
         startDuckGenerator();
         startDuckChecker();
@@ -106,11 +107,11 @@ public class GameController {
             if(duckMovingTimer.getDelay() > 0){
                 duckMovingTimer.setDelay(duckMovingTimer.getDelay() - 1);
             }
-            if(playerObstacleController.getCloudTimerDelay() > 0){
-                playerObstacleController.setCloudTimerDelay(playerObstacleController.getCloudTimerDelay() - 100);
+            if(obstacleController.getCloudTimerDelay() > 0){
+                obstacleController.setCloudTimerDelay(obstacleController.getCloudTimerDelay() - 100);
             }
             if(interfaceController.getTick() % 60 == 0){
-                playerObstacleController.generateTrees();
+                obstacleController.generateTrees();
             }
         });
         difficultyTimer.start();
@@ -166,10 +167,15 @@ public class GameController {
         stopMovingDucks();
         stopDifficulty();
         interfaceController.stop();
-        playerObstacleController.stop();
+        obstacleController.stop();
         playing = false;
         GameOverPanel gameOverPanel = new GameOverPanel();
         frame.setNewPanel(gameOverPanel);
+    }
+
+    public void restart(){
+        this.frame.dispose();
+        new MenuController(new MenuFrame()).start();
     }
 
     public GamePanel getPanel() {
