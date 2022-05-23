@@ -43,10 +43,9 @@ public class InterfaceController {
         this.stopwatch.start();
         Thread thread = new Thread(() -> {
             interTimer = new Timer(0, e -> {
-                if(PlayerModel.getInstance().getScore() >= PlayerModel.getInstance().getUpgradeCost()){
+                if (PlayerModel.getInstance().getScore() >= PlayerModel.getInstance().getUpgradeCost()) {
                     upgradeButton.enableImage();
-                }
-                else {
+                } else {
                     upgradeButton.disableImage();
                 }
                 upgradeCostLabel.setText("cost: " + PlayerModel.getInstance().getUpgradeCost());
@@ -60,7 +59,7 @@ public class InterfaceController {
         thread.start();
     }
 
-    public void setLabels(){
+    public void setLabels() {
         panel.setBackground(Color.BLACK);
         panel.setSize(1280, 50);
         SpringLayout layout = new SpringLayout();
@@ -87,7 +86,7 @@ public class InterfaceController {
         interTimer.stop();
     }
 
-    public int getTick(){
+    public int getTick() {
         return stopwatch.getTicks();
     }
 }

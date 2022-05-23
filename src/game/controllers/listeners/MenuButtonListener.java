@@ -19,7 +19,7 @@ public record MenuButtonListener(MenuController controller) implements ActionLis
             case "Medium" -> difficulty = 1;
             case "Hard" -> difficulty = 2;
         }
-        if(difficulty != -1) {
+        if (difficulty != -1) {
             controller.getFrame().dispose();
             new GameController(difficulty).startGame();
         }

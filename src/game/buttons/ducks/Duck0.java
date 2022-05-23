@@ -59,7 +59,7 @@ public abstract class Duck0 extends JButton implements ActionListener {
         return this.getX() <= -this.getWidth();
     }
 
-    public int getReward(){
+    public int getReward() {
         return this.score;
     }
 

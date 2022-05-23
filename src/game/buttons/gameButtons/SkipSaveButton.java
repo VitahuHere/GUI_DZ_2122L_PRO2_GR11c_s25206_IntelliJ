@@ -7,7 +7,7 @@ import javax.swing.event.ChangeListener;
 public class SkipSaveButton extends JButton implements ChangeListener {
     private final String path = "src/game/images/game/skip.png";
 
-    public SkipSaveButton(){
+    public SkipSaveButton() {
         this.setIcon(new ImageIcon(path));
         this.setBorderPainted(false);
         this.setContentAreaFilled(false);

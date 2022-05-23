@@ -1,24 +1,30 @@
 package game.controllers;
 
 import game.buttons.menuButtons.*;
-import game.controllers.listeners.KeyCombListener;
 import game.controllers.listeners.MenuButtonListener;
 import game.frames.GameFrame;
 import game.frames.MenuFrame;
-import game.panels.HighScoresPanel;
 import game.panels.MenuPanel;
 
 public class MenuController {
+    public static MenuController instance;
     private final MenuFrame frame;
 
     public MenuController(MenuFrame frame) {
         this.frame = frame;
         this.frame.setVisible(true);
+        instance = this;
+        if(!PlayersController.getInstance().isLoaded()) {
+            PlayersController.getInstance().loadPlayers();
+        }
     }
 
-    public MenuController(GameFrame frame){
-        this.frame = new MenuFrame();
-        this.frame.setVisible(true);
+    public MenuController(GameFrame ignore) {
+        this(new MenuFrame());
+    }
+
+    public static MenuController getInstance() {
+        return instance;
     }
 
     public void start() {
@@ -62,15 +68,15 @@ public class MenuController {
     }
 
     public void highScores() {
-        HighScoresPanel panel = new HighScoresPanel();
-        this.frame.setNewPanel(panel);
+        new PlayersController().loadHighScores();
     }
 
     public void exit() {
+        PlayersController.getInstance().savePlayers();
         this.frame.dispose();
     }
 
-    public MenuFrame getFrame(){
+    public MenuFrame getFrame() {
         return this.frame;
     }
 }

@@ -12,7 +12,7 @@ public class StopwatchLabel extends JLabel {
         this.setForeground(Color.WHITE);
     }
 
-    public void setTime(int seconds){
+    public void setTime(int seconds) {
         int minutes = seconds / 60;
         int hours = minutes / 60;
         seconds = seconds % 60;

@@ -6,7 +6,7 @@ public class Duck10 extends Duck0 {
         super("src/game/images/ducks/left 10 duck.png", 10, -3);
     }
 
-    public Duck10(boolean right){
+    public Duck10(boolean right) {
         super("src/game/images/ducks/right 10 duck.png", right, 10, 3);
     }
 }

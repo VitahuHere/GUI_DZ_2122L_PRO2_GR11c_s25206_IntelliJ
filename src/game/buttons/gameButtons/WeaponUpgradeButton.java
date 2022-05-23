@@ -8,7 +8,7 @@ public class WeaponUpgradeButton extends JButton implements ChangeListener {
     private String path;
     private String pressedPath;
 
-    public WeaponUpgradeButton(){
+    public WeaponUpgradeButton() {
         this.setIcon(new ImageIcon("src/game/images/game/upgrade disabled.png"));
         this.setBorderPainted(false);
         this.setContentAreaFilled(false);
@@ -17,13 +17,13 @@ public class WeaponUpgradeButton extends JButton implements ChangeListener {
         this.addChangeListener(this);
     }
 
-    public void enableImage(){
+    public void enableImage() {
         this.path = "src/game/images/game/upgrade.png";
         this.pressedPath = "src/game/images/game/upgrade pressed.png";
         stateChanged(null);
     }
 
-    public void disableImage(){
+    public void disableImage() {
         this.path = "src/game/images/game/upgrade disabled.png";
         this.pressedPath = "src/game/images/game/upgrade disabled.png";
         stateChanged(null);

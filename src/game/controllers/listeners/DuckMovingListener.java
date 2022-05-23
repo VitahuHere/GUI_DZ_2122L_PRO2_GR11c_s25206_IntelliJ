@@ -11,8 +11,8 @@ public class DuckMovingListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (Component c : GameController.getInstance().getPanel().getComponents()){
-            if (c instanceof Duck0){
+        for (Component c : GameController.getInstance().getPanel().getComponents()) {
+            if (c instanceof Duck0) {
                 ((Duck0) c).move(0);
             }
         }

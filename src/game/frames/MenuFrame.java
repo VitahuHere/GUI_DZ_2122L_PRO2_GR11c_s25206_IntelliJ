@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.KeyListener;
 
 public class MenuFrame extends JFrame {
-    public MenuFrame(){
+    public MenuFrame() {
         super("Duck shooter");
         this.setIconImage(new ImageIcon("src/game/images/ducks/right 1 duck.png").getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

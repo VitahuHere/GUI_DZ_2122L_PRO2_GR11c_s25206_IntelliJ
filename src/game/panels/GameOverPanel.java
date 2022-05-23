@@ -8,7 +8,7 @@ import game.controllers.listeners.SkipSaveListener;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameOverPanel extends JPanel{
+public class GameOverPanel extends JPanel {
     private final ImageIcon background = new ImageIcon("src/game/images/backgrounds/export XP background.png");
 
     public GameOverPanel() {
@@ -20,10 +20,15 @@ public class GameOverPanel extends JPanel{
         layout.putConstraint(SpringLayout.NORTH, gameOverLabel, 0, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, gameOverLabel, 0, SpringLayout.HORIZONTAL_CENTER, this);
 
+        JLabel enterNameLabel = new JLabel("Enter your name:");
+        enterNameLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        layout.putConstraint(SpringLayout.NORTH, enterNameLabel, 10, SpringLayout.SOUTH, gameOverLabel);
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, enterNameLabel, 0, SpringLayout.HORIZONTAL_CENTER, this);
+
         JTextField textField = new JTextField();
         textField.setFont(new Font("Arial", Font.BOLD, 25));
         textField.setPreferredSize(new Dimension(500, 50));
-        layout.putConstraint(SpringLayout.NORTH, textField, 10, SpringLayout.SOUTH, gameOverLabel);
+        layout.putConstraint(SpringLayout.NORTH, textField, 10, SpringLayout.SOUTH, enterNameLabel);
         layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, textField, 0, SpringLayout.HORIZONTAL_CENTER, this);
 
         JPanel panel = new JPanel();
@@ -40,6 +45,7 @@ public class GameOverPanel extends JPanel{
         panel.add(saveButton);
         panel.add(skipButton);
 
+        this.add(enterNameLabel);
         this.add(gameOverLabel);
         this.add(textField);
         this.add(panel);

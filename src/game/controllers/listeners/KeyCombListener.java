@@ -17,7 +17,7 @@ public record KeyCombListener(GameFrame frame) implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.isControlDown() && e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_Q) {
-            if(GameController.playing) {
+            if (GameController.playing) {
                 GameController.getInstance().stopGame();
             }
             frame.dispose();

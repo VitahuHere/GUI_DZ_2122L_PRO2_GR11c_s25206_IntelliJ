@@ -3,16 +3,15 @@ package game.controllers.listeners;
 import game.buttons.ducks.*;
 import game.panels.GamePanel;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DuckGeneratorListener implements ActionListener {
     private final GamePanel panel;
-    private int current;
-    private int max;
     private final boolean easy;
     private final boolean medium;
+    private int current;
+    private int max;
 
     public DuckGeneratorListener(GamePanel panel, int max, boolean easy, boolean medium) {
         this.panel = panel;
@@ -28,29 +27,26 @@ public class DuckGeneratorListener implements ActionListener {
             Duck0 duck;
             int pick = (int) (Math.random() * 10);
             int side = (int) (Math.random() * 2);
-            if(easy){
+            if (easy) {
                 duck = generateEasyDuck(side == 0, pick);
-            }
-            else if(medium){
+            } else if (medium) {
                 duck = generateMediumDuck(side == 0, pick);
-            }
-            else{
+            } else {
                 duck = generateHardHardDuck(side == 0, pick);
             }
-            if(side == 0){
-                duck.setLocation(0, (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight()) + 50));
-            }
-            else{
-                duck.setLocation(panel.getWidth()-duck.getWidth(), (int)(Math.random() * (panel.getHeight() - 2 * duck.getHeight()) + 50));
+            if (side == 0) {
+                duck.setLocation(0, (int) (Math.random() * (panel.getHeight() - 2 * duck.getHeight()) + 50));
+            } else {
+                duck.setLocation(panel.getWidth() - duck.getWidth(), (int) (Math.random() * (panel.getHeight() - 2 * duck.getHeight()) + 50));
             }
             current++;
             panel.addNewDuck(duck);
         }
     }
 
-    private Duck0 generateEasyDuck(boolean right, int odd){
+    private Duck0 generateEasyDuck(boolean right, int odd) {
         Duck0 duck = null;
-        switch (twoOdds(right, odd)){
+        switch (twoOdds(right, odd)) {
             case 0 -> duck = new Duck1(true);
             case 1 -> duck = new Duck5(true);
             case 2 -> duck = new Duck1();
@@ -59,9 +55,9 @@ public class DuckGeneratorListener implements ActionListener {
         return duck;
     }
 
-    private Duck0 generateMediumDuck(boolean right, int odd){
-        Duck0 duck = null;;
-        switch (twoOdds(right, odd)){
+    private Duck0 generateMediumDuck(boolean right, int odd) {
+        Duck0 duck = null;
+        switch (twoOdds(right, odd)) {
             case 0 -> duck = new Duck5(true);
             case 1 -> duck = new Duck10(true);
             case 2 -> duck = new Duck5();
@@ -70,9 +66,9 @@ public class DuckGeneratorListener implements ActionListener {
         return duck;
     }
 
-    private Duck0 generateHardHardDuck(boolean right, int odd){
+    private Duck0 generateHardHardDuck(boolean right, int odd) {
         Duck0 duck = null;
-        switch (twoOdds(right, odd)){
+        switch (twoOdds(right, odd)) {
             case 0 -> duck = new Duck10(true);
             case 1 -> duck = new Duck15(true);
             case 2 -> duck = new Duck10();
@@ -81,28 +77,27 @@ public class DuckGeneratorListener implements ActionListener {
         return duck;
     }
 
-    private int twoOdds(boolean right, int odd){
-        if(right){
+    private int twoOdds(boolean right, int odd) {
+        if (right) {
             return odd < 7 ? 0 : 1;
-        }
-        else{
+        } else {
             return odd < 7 ? 2 : 3;
         }
-    }
-
-    public void setCurrent(int current) {
-         this.current = current;
     }
 
     public int getCurrent() {
         return current;
     }
 
-    public void setMax(int max) {
-        this.max = max;
+    public void setCurrent(int current) {
+        this.current = current;
     }
 
     public int getMax() {
         return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
     }
 }

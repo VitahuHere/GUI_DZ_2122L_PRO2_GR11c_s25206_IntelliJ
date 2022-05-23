@@ -2,13 +2,14 @@ package game.players;
 
 import java.io.Serializable;
 
-public class PlayerModel implements Serializable {
+public class PlayerModel implements Serializable, Comparable<PlayerModel> {
     private static PlayerModel instance;
     private int lives;
     private int score;
     private int upgradeCost;
     private int hitOnClick;
     private String name;
+    private int difficultyLevel;
 
     public PlayerModel() {
         this.lives = 10;
@@ -34,6 +35,10 @@ public class PlayerModel implements Serializable {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public void addPoints(int score) {
         this.score += score;
     }
@@ -48,20 +53,39 @@ public class PlayerModel implements Serializable {
         upgradeCost *= 2;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public int getUpgradeCost(){
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getUpgradeCost() {
         return this.upgradeCost;
     }
 
+    public int getDifficulty() {
+        return this.difficultyLevel;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficultyLevel = difficulty;
+    }
+
     @Override
-    public String toString(){
-        return "Player: " + name + " score: " + score + " lives: " + lives;
+    public String toString() {
+        String diff = switch (difficultyLevel) {
+            case 1 -> "Easy";
+            case 2 -> "Medium";
+            case 3 -> "Hard";
+            default -> null;
+        };
+        return name + " score: " + score + " difficulty: " + diff;
+    }
+
+    @Override
+    public int compareTo(PlayerModel o) {
+        return o.score - this.score;
     }
 }

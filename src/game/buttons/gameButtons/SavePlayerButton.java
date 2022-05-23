@@ -7,7 +7,7 @@ import javax.swing.event.ChangeListener;
 public class SavePlayerButton extends JButton implements ChangeListener {
     private final String path = "src/game/images/game/save.png";
 
-    public SavePlayerButton(){
+    public SavePlayerButton() {
         this.setIcon(new ImageIcon(path));
         this.setBorderPainted(false);
         this.setContentAreaFilled(false);
